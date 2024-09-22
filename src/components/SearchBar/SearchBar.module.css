@@ -1,0 +1,31 @@
+.header {
+	display: flex;
+	justify-content: center;
+	min-width: 1440px;
+	background-color: #444abf;
+}
+
+.btn {
+	border-radius: 0px;
+	height: 100%;
+	border: none;
+}
+
+.input {
+	height: 100%;
+	border: none;
+	padding: 0;
+	padding-left: 10px;
+}
+
+@-moz-document url-prefix() {
+	.input {
+		position: relative;
+		top: -1px;
+	}
+}
+
+.form {
+	margin-top: 3px;
+	margin-bottom: 5px;
+}
