@@ -6,6 +6,21 @@ import ImageGallery from "./components/ImageGallery/ImageGallery";
 import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
 import Loader from "./components/Loader/Loader";
 import toast, { Toaster } from "react-hot-toast";
+import Modal from "react-modal";
+import ImageModal from "./components/ImageModal/ImageModal";
+
+Modal.setAppElement("#root");
+
+const customStyles = {
+	content: {
+		top: "50%",
+		left: "50%",
+		right: "auto",
+		bottom: "auto",
+		marginRight: "-50%",
+		transform: "translate(-50%, -50%)",
+	},
+};
 
 const App = () => {
 	const [searchValue, setSearchValue] = useState("");
@@ -14,6 +29,8 @@ const App = () => {
 	// const [isError, setIsError] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 	const [page, setPage] = useState(0);
+	const [modalIsOpen, setIsOpen] = useState(false);
+	const [modalData, setModalData] = useState("");
 
 	const onSubmit = (value) => {
 		setSearchValue(value);
@@ -42,11 +59,25 @@ const App = () => {
 		setPage((prev) => prev + 1);
 	};
 
+	function openModal() {
+		setIsOpen(true);
+	}
+
+	function closeModal() {
+		setIsOpen(false);
+	}
+
 	return (
 		<>
 			<SearchBar onSubmit={onSubmit} notify={notify} />
 			{!searchValue && <Toaster />}
-			{photos.length > 0 && <ImageGallery photos={photos} />}
+			{photos.length > 0 && (
+				<ImageGallery
+					photos={photos}
+					setModalData={setModalData}
+					onClick={openModal}
+				/>
+			)}
 			{isLoading && <Loader />}
 			{error && (
 				<ErrorMessage textAlign="center">
@@ -56,6 +87,14 @@ const App = () => {
 			{searchValue && !error && (
 				<button onClick={handleChangePage}>Load more</button>
 			)}
+			<Modal
+				isOpen={modalIsOpen}
+				onRequestClose={closeModal}
+				style={customStyles}
+				contentLabel="Example Modal"
+			>
+				<ImageModal src={modalData} />
+			</Modal>
 		</>
 	);
 };
