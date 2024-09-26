@@ -1,11 +1,7 @@
 import s from "./ImageCard.module.css";
-const ImageCard = ({ alt, src, setModalData }) => {
-	const getValueImage = () => {
-		const valueImage = src.regular;
-		setModalData(valueImage);
-	};
+const ImageCard = ({ alt, src }) => {
 	return (
-		<div className={s.item} onClick={getValueImage}>
+		<div className={s.item}>
 			<img src={src.small} alt={alt} />
 		</div>
 	);

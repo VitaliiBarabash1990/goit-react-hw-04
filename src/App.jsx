@@ -12,7 +12,6 @@ const App = () => {
 	const [searchValue, setSearchValue] = useState("");
 	const [photos, setPhotos] = useState([]);
 	const [error, setError] = useState(false);
-	// const [isError, setIsError] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 	const [page, setPage] = useState(1);
 	const [modalIsOpen, setIsOpen] = useState(false);
@@ -49,9 +48,10 @@ const App = () => {
 		setPage((prev) => prev + 1);
 	};
 
-	function openModal() {
+	const getValueImage = (value) => {
+		setModalData(value);
 		setIsOpen(true);
-	}
+	};
 
 	function closeModal() {
 		setIsOpen(false);
@@ -62,11 +62,7 @@ const App = () => {
 			<SearchBar onSubmit={onSubmit} notify={notify} />
 			{!searchValue && <Toaster />}
 			{photos.length > 0 && (
-				<ImageGallery
-					photos={photos}
-					setModalData={setModalData}
-					onClick={openModal}
-				/>
+				<ImageGallery photos={photos} getValueImage={getValueImage} />
 			)}
 			{isLoading && <Loader />}
 			{error && (
