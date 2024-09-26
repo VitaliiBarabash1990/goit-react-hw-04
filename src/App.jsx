@@ -7,6 +7,7 @@ import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
 import Loader from "./components/Loader/Loader";
 import toast, { Toaster } from "react-hot-toast";
 import ImageModal from "./components/ImageModal/ImageModal";
+import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
 
 const App = () => {
 	const [searchValue, setSearchValue] = useState("");
@@ -71,7 +72,7 @@ const App = () => {
 				</ErrorMessage>
 			)}
 			{searchValue && !error && (
-				<button onClick={handleChangePage}>Load more</button>
+				<LoadMoreBtn handleChangePage={handleChangePage} />
 			)}
 			<ImageModal
 				modalIsOpen={modalIsOpen}
