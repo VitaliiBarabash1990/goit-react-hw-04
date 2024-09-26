@@ -6,33 +6,23 @@ import ImageGallery from "./components/ImageGallery/ImageGallery";
 import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
 import Loader from "./components/Loader/Loader";
 import toast, { Toaster } from "react-hot-toast";
-import Modal from "react-modal";
 import ImageModal from "./components/ImageModal/ImageModal";
-
-Modal.setAppElement("#root");
-
-const customStyles = {
-	content: {
-		top: "50%",
-		left: "50%",
-		right: "auto",
-		bottom: "auto",
-		marginRight: "-50%",
-		transform: "translate(-50%, -50%)",
-	},
-};
 
 const App = () => {
 	const [searchValue, setSearchValue] = useState("");
 	const [photos, setPhotos] = useState([]);
-	const [error, setError] = useState(null);
+	const [error, setError] = useState(false);
 	// const [isError, setIsError] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
-	const [page, setPage] = useState(0);
+	const [page, setPage] = useState(1);
 	const [modalIsOpen, setIsOpen] = useState(false);
 	const [modalData, setModalData] = useState("");
 
 	const onSubmit = (value) => {
+		if (value !== searchValue) {
+			setPage(1);
+			setPhotos([]);
+		}
 		setSearchValue(value);
 	};
 	const notify = () => toast("Please fill out this field!");
@@ -87,14 +77,11 @@ const App = () => {
 			{searchValue && !error && (
 				<button onClick={handleChangePage}>Load more</button>
 			)}
-			<Modal
-				isOpen={modalIsOpen}
-				onRequestClose={closeModal}
-				style={customStyles}
-				contentLabel="Example Modal"
-			>
-				<ImageModal src={modalData} />
-			</Modal>
+			<ImageModal
+				modalIsOpen={modalIsOpen}
+				closeModal={closeModal}
+				src={modalData}
+			/>
 		</>
 	);
 };
